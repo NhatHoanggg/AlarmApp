@@ -1,20 +1,37 @@
+using Alarm.DTO;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
 namespace Alarm
 {
-    public partial class ModelAlarm : DbContext
+    public class ModelAlarm : DbContext
     {
+        // Your context has been configured to use a 'ModelAlarm' connection string from your application's 
+        // configuration file (App.config or Web.config). By default, this connection string targets the 
+        // 'Alarm.ModelAlarm' database on your LocalDb instance. 
+        // 
+        // If you wish to target a different database and/or database provider, modify the 'ModelAlarm' 
+        // connection string in the application configuration file.
         public ModelAlarm()
             : base("name=ModelAlarm")
         {
+            Database.SetInitializer<ModelAlarm>(new CreateDB());
         }
+        public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Sound> Sounds { get; set; }
+        public virtual DbSet<Schedule> Schedules { get; set; }
 
+        // Add a DbSet for each entity type that you want to include in your model. For more information 
+        // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-        }
+        // public virtual DbSet<MyEntity> MyEntities { get; set; }
+        
     }
+
+    //public class MyEntity
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //}
 }
