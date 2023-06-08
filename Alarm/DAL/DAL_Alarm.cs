@@ -79,15 +79,33 @@ namespace Alarm.DAL
             }
             return data;
         }
-        public dynamic GetAllUser()
+        public dynamic GetAllUser(string order)
         {
-            return (from p in db.Accounts
-                    where p.Role != "admin"
-                    select new
-                    {
-                        p.Username,
-                        p.Password
-                    }).ToList();
+            if (order == "Ascending")
+                return (from p in db.Accounts
+                        where p.Role != "admin"
+                        orderby p.Username ascending
+                        select new
+                        {
+                            p.Username,
+                            p.Password
+                        }).ToList();
+            if (order == "Descending")
+                return (from p in db.Accounts
+                        where p.Role != "admin"
+                        orderby p.Username descending
+                        select new
+                        {
+                            p.Username,
+                            p.Password
+                        }).ToList();
+             return (from p in db.Accounts
+                        where p.Role != "admin"
+                        select new
+                        {
+                            p.Username,
+                            p.Password
+                        }).ToList();
         }
         public void AddUpdateSchedule(Schedule s)
         {
@@ -124,14 +142,28 @@ namespace Alarm.DAL
             }
         }
 
-        public int CheckExistSound(int id)
+        public Boolean checkExistSound(string sound)
         {
-            Sound a = db.Sounds.Find(id);
-            if (a != null )
+            using (var db = new ModelAlarm())
             {
-                return 1;
+                bool exists = db.Sounds.Any(p => p.SoundName == sound );
+                return exists;
             }
-            return 0;
+            //return true;
+        }
+        public Sound GetSoundById(int id)
+        {
+            return db.Sounds.Find(id);
+        }
+
+        public void AddSound(Sound sound)
+        {
+            Sound x = db.Sounds.Find(sound.Id_Sound);
+            if (x == null)
+            {
+                db.Sounds.Add(sound);
+                db.SaveChanges();
+            }
         }
 
     }

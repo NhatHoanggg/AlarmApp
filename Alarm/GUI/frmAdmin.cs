@@ -1,4 +1,5 @@
 ﻿using Alarm.BLL;
+using Alarm.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace Alarm.GUI
 {
     public partial class frmAdmin : Form
     {
+        private int ID = 0;
         public frmAdmin()
         {
             InitializeComponent();
@@ -25,7 +27,7 @@ namespace Alarm.GUI
         }
         public void ReLoadUser()
         {
-            dgv_User.DataSource = BLL_Alarm.Instance.GetAllUser();
+            dgv_User.DataSource = BLL_Alarm.Instance.GetAllUser("");
         }
         public void ReloadSound()
         {
@@ -37,34 +39,13 @@ namespace Alarm.GUI
 
             if (cbbSortUser.SelectedIndex == 0)
             {
-                //dgv_Sound.DataSource = BLL_Alarm.Instance;
+                dgv_User.DataSource = BLL_Alarm.Instance.GetAllUser("Ascending");
             }
             else
             {
+                dgv_User.DataSource = BLL_Alarm.Instance.GetAllUser("Descending");
             }
 
-        }
-
-
-        public void checkSoundCBB()
-        {
-            string Dir = System.IO.Directory.GetCurrentDirectory();
-            Dir = Dir.Remove(Dir.LastIndexOf("\\"));
-            Dir = Dir.Remove(Dir.LastIndexOf("\\"));
-            Dir = Dir + "\\" + "Resources" + "\\" + "sound";
-
-            DirectoryInfo d = new DirectoryInfo(Dir);
-
-            FileInfo[] Files = d.GetFiles("*.mp3");
-            int id = 0;
-
-            foreach (FileInfo file in Files)
-            {
-                string sound = file.Name;
-                sound = sound.Remove(sound.LastIndexOf("."));
-                //li.Add(sound);
-                MessageBox.Show(sound + " -- " + BLL_Alarm.Instance.CheckExistSound(id).ToString());
-            }
         }
 
         private void btnAddSound_Click(object sender, EventArgs e)
@@ -75,7 +56,55 @@ namespace Alarm.GUI
             ProcessStartInfo startInfo = new ProcessStartInfo(chromePath);
             startInfo.Arguments = url;
             Process.Start(startInfo);
-            checkSoundCBB();
+
+            // -- > 
+
+            string Dir = System.IO.Directory.GetCurrentDirectory();
+            Dir = Dir.Remove(Dir.LastIndexOf("\\"));
+            Dir = Dir.Remove(Dir.LastIndexOf("\\"));
+            Dir = Dir + "\\" + "Resources" + "\\" + "sound";
+
+            DirectoryInfo d = new DirectoryInfo(Dir);
+
+            FileInfo[] Files = d.GetFiles("*.mp3");
+
+            List<string> li = new List<string>();
+
+            foreach (FileInfo file in Files)
+            {
+                string sound = file.Name;
+                sound = sound.Remove(sound.LastIndexOf("."));
+                if (!BLL_Alarm.Instance.checkExistSound(sound))
+                {
+                    li.Add(sound);
+                }
+                //MessageBox.Show(BLL_Alarm.Instance.checkExistSound(sound).ToString());
+                //MessageBox.Show(sound + " -- " + BLL_Alarm.Instance.CheckExistSound(id).ToString());
+            }
+            
+
+            foreach (string sound in li)
+            {
+                Random rd = new Random();
+                int r;
+                do
+                {
+                    r = 0;
+                    r = rd.Next(0, 100);
+                } while (BLL_Alarm.Instance.GetSoundById(r) != null);
+                this.ID = r;
+
+
+
+
+                Sound s = new Sound
+                {
+                    Id_Sound = this.ID,
+                    SoundName = sound
+                };
+                BLL_Alarm.Instance.AddSound(s);
+                ReloadSound();
+            }
         }
     }
 }

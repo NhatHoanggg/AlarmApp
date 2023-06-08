@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Alarm.BLL;
 using Alarm.DTO;
+using WMPLib;
 
 namespace Alarm.GUI
 {
@@ -20,17 +21,36 @@ namespace Alarm.GUI
             this.UserName = UserName;
             InitializeComponent();
             GUI();
-            play();
+            run();          
         }
-        public void play()
+        public void play(string url, string timestart)
+        {
+            
+            string[] arr = timestart.Split(':');
+
+            var timer = new System.Timers.Timer(1000);
+
+            timer.Elapsed += (sender, e) =>
+            {
+                DateTime now = DateTime.Now;
+
+                if (now.Hour.ToString() == arr[0] && now.Minute.ToString() == arr[1] && now.Second.ToString() == arr[2])
+                {
+                    MessageBox.Show(url);
+                    WindowsMediaPlayer player = new WindowsMediaPlayer();
+                    player.URL = url;
+                    player.controls.play();
+                }
+            };
+
+            timer.Start();
+        }
+        public void run()
         {
             DateTime now = DateTime.Now;
-            int hour = now.Hour; // Truy cập giờ
-            int minute = now.Minute; // Truy cập phút
-            int second = now.Second; // Truy cập giây
 
             List<string> list = new List<string>();
-            for (int i = 0; i < dgv1.Rows.Count - 1; i++)
+            for (int i = 0; i < dgv1.Rows.Count ; i++)
             {
                 DataGridViewRow row = dgv1.Rows[i];
                 string cellValue = row.Cells["SoundName"].Value.ToString();
@@ -41,9 +61,19 @@ namespace Alarm.GUI
                 Dir = Dir + "\\" + "Resources" + "\\" + "sound";
                 string url = Dir + "\\" + cellValue + ".mp3";
 
+                string datestart = row.Cells["DateStart"].Value.ToString();
+                string timestart = row.Cells["TimeStart"].Value.ToString();
+                if (datestart == now.Date.ToString())
+                {
+                    play(url,timestart);
+                }
+                else
+                {
 
+                }
                 //MessageBox.Show(url);
             }
+            
         }
         public void GUI()
         {
@@ -69,6 +99,7 @@ namespace Alarm.GUI
             {
                 MessageBox.Show(ex.Message);
             }
+            run();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -86,6 +117,7 @@ namespace Alarm.GUI
             {
                 MessageBox.Show(ex.Message);
             }
+            run();
         }
 
         private void btnDel_Click(object sender, EventArgs e)
@@ -99,6 +131,7 @@ namespace Alarm.GUI
             }
             ReLoadDGV();
             this.OnLoad(e);
+            run();
         }
     }
 }

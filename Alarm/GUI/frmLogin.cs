@@ -69,6 +69,7 @@ namespace Alarm
                 {
                     using (frmAdmin f = new frmAdmin())
                     {
+                        MessageBox.Show("SUCCESS!", "SUCCESS!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Hide();
                         f.ShowDialog();
                         this.Close();
@@ -85,6 +86,7 @@ namespace Alarm
                 {
                     using(frmUser_main f = new frmUser_main(txtUsername.Text))
                     {
+                        MessageBox.Show("SUCCESS!", "SUCCESS!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Hide();
                         f.ShowDialog();
                         this.Dispose();
@@ -97,7 +99,7 @@ namespace Alarm
             }
             else
             {
-                MessageBox.Show("Tài khoản hoặc mật khấu không đúng");
+                MessageBox.Show("Account does not exist!","ERROR!!!",MessageBoxButtons.OK,MessageBoxIcon.Stop);
                 txtUsername.Text = "";
                 txtPw.Text = "";
             }

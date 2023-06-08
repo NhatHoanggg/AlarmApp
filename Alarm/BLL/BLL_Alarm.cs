@@ -36,42 +36,60 @@ namespace Alarm.BLL
         {
             return DAL_Alarm.Instance.GetAccount(UserName);
         }
+
         public dynamic GetScheduleByUserName(string UserName)
         {
             return DAL_Alarm.Instance.GetScheduleByUserName(UserName);
         }
+
         public Schedule GetScheduleById(int id)
         {
             return DAL_Alarm.Instance.GetScheduleById(id);
         }
+
         public Sound GetSoundByID_Sound(int Id_Sound)
         {
             return BLL_Alarm.Instance.GetSoundByID_Sound(Id_Sound);
         }
+
+        // -> view 
         public List<CBBSound> GetAllSound()
         {
             return DAL_Alarm.Instance.GetAllSound();
         }
-        public dynamic GetAllUser()
+        public dynamic GetAllUser(string order)
         {
-            return DAL_Alarm.Instance.GetAllUser();
+            return DAL_Alarm.Instance.GetAllUser(order);
         }
+
         public void AddUpdateSchedule(Schedule s)
         {
             DAL_Alarm.Instance.AddUpdateSchedule(s);
         }
+
         public void DelSchedule(int Id)
         {
             DAL_Alarm.Instance.DelSchedule(Id);
         }
+
         public void AddUser(Account ac)
         {
             DAL_Alarm.Instance.AddUser(ac);
         }
 
-        public int CheckExistSound(int id)
+        public Boolean checkExistSound(string sound)
         {
-            return DAL_Alarm.Instance.CheckExistSound(id);
+            return DAL_Alarm.Instance.checkExistSound(sound);
+        }
+
+        public Sound GetSoundById(int id)
+        {
+            return DAL_Alarm.Instance.GetSoundById(id);
+        }
+
+        public void AddSound(Sound sound)
+        {
+           DAL_Alarm.Instance.AddSound(sound);
         }
     }
 }

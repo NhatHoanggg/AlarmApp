@@ -85,7 +85,7 @@ namespace Alarm.GUI
                 };
                 BLL_Alarm.Instance.AddUpdateSchedule(s);
                 d();
-                this.Dispose();
+                this.Dispose();       
             }
             
         }

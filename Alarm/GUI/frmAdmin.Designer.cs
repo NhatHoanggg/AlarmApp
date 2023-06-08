@@ -35,7 +35,6 @@
             this.btnAddSound = new System.Windows.Forms.Button();
             this.cbbSortUser = new System.Windows.Forms.ComboBox();
             this.cbbSortSound = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.btnSort1 = new System.Windows.Forms.Button();
             this.btnSort2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -67,7 +66,7 @@
             // 
             // btnDeleteSound
             // 
-            this.btnDeleteSound.Location = new System.Drawing.Point(369, 700);
+            this.btnDeleteSound.Location = new System.Drawing.Point(291, 700);
             this.btnDeleteSound.Name = "btnDeleteSound";
             this.btnDeleteSound.Size = new System.Drawing.Size(131, 51);
             this.btnDeleteSound.TabIndex = 2;
@@ -119,15 +118,6 @@
             this.cbbSortSound.Size = new System.Drawing.Size(246, 35);
             this.cbbSortSound.TabIndex = 6;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(212, 700);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(131, 51);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Update";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // btnSort1
             // 
             this.btnSort1.Location = new System.Drawing.Point(531, 323);
@@ -177,7 +167,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSort2);
             this.Controls.Add(this.btnSort1);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.cbbSortSound);
             this.Controls.Add(this.cbbSortUser);
             this.Controls.Add(this.btnAddSound);
@@ -207,7 +196,6 @@
         private System.Windows.Forms.Button btnAddSound;
         private System.Windows.Forms.ComboBox cbbSortUser;
         private System.Windows.Forms.ComboBox cbbSortSound;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnSort1;
         private System.Windows.Forms.Button btnSort2;
         private System.Windows.Forms.Label label1;
