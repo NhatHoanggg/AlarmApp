@@ -34,6 +34,35 @@ namespace Alarm.GUI
             dgv_Sound.DataSource = BLL_Alarm.Instance.GetAllSound();
         }
 
+        private void btnDeleteUser_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure to delete user?",
+                "Confirm",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                //MessageBox.Show("YES");
+                if (dgv_User.SelectedRows.Count > 0)
+                {
+                    foreach (DataGridViewRow i in dgv_User.SelectedRows)
+                    {
+                        BLL_Alarm.Instance.DelUser(i.Cells[0].Value.ToString());
+                    }
+                }
+                ReLoadUser();
+                MessageBox.Show("Delete User Success!", 
+                    "SUCCESS!!!", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
+            }
+
+            else
+            {
+
+            }
+            
+        }
+
         private void btnSort1_Click(object sender, EventArgs e)
         {
 
@@ -57,7 +86,6 @@ namespace Alarm.GUI
             startInfo.Arguments = url;
             Process.Start(startInfo);
 
-            // -- > 
 
             string Dir = System.IO.Directory.GetCurrentDirectory();
             Dir = Dir.Remove(Dir.LastIndexOf("\\"));
@@ -82,7 +110,6 @@ namespace Alarm.GUI
                 //MessageBox.Show(sound + " -- " + BLL_Alarm.Instance.CheckExistSound(id).ToString());
             }
             
-
             foreach (string sound in li)
             {
                 Random rd = new Random();
@@ -95,8 +122,6 @@ namespace Alarm.GUI
                 this.ID = r;
 
 
-
-
                 Sound s = new Sound
                 {
                     Id_Sound = this.ID,
@@ -105,6 +130,62 @@ namespace Alarm.GUI
                 BLL_Alarm.Instance.AddSound(s);
                 ReloadSound();
             }
+        }
+
+        private void btnDeleteSound_Click(object sender, EventArgs e)
+        {
+
+
+            if (MessageBox.Show("Are you sure to delete sound?",
+                "Confirm",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    //MessageBox.Show("YES");
+
+                    string Dir = System.IO.Directory.GetCurrentDirectory();
+                    Dir = Dir.Remove(Dir.LastIndexOf("\\"));
+                    Dir = Dir.Remove(Dir.LastIndexOf("\\"));
+                    Dir = Dir + "\\" + "Resources" + "\\" + "sound";
+
+                    if (dgv_Sound.SelectedRows.Count > 0)
+                    {
+                        foreach (DataGridViewRow i in dgv_Sound.SelectedRows)
+                        {
+                            string filePath = Dir + "\\" + i.Cells[1].Value.ToString() + ".mp3";
+
+                            BLL_Alarm.Instance.DelUser(i.Cells[1].Value.ToString());
+                            //MessageBox.Show(filePath);
+                            if (File.Exists(filePath))
+                            {
+                                File.Delete(filePath); 
+                                MessageBox.Show("Xóa file thành công!");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không tìm thấy tệp tin!");
+                            }
+                        }
+                    }
+                    ReLoadUser();
+                    MessageBox.Show("Delete User Success!",
+                        "SUCCESS!!!",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+        }
+
+        private void btnSort2_Click(object sender, EventArgs e)
+        {
+            if (cbbSortSound.SelectedIndex == 0)
+            {
+                dgv_Sound.DataSource = BLL_Alarm.Instance.GetSoundTable("Ascending");
+            }
+            else
+            {
+                dgv_Sound.DataSource = BLL_Alarm.Instance.GetSoundTable("Descending");
+            }
+
         }
     }
 }

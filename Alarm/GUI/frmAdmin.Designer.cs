@@ -51,6 +51,7 @@
             this.btnDeleteUser.TabIndex = 0;
             this.btnDeleteUser.Text = "Delete";
             this.btnDeleteUser.UseVisualStyleBackColor = true;
+            this.btnDeleteUser.Click += new System.EventHandler(this.btnDeleteUser_Click);
             // 
             // dgv_User
             // 
@@ -72,6 +73,7 @@
             this.btnDeleteSound.TabIndex = 2;
             this.btnDeleteSound.Text = "Delete";
             this.btnDeleteSound.UseVisualStyleBackColor = true;
+            this.btnDeleteSound.Click += new System.EventHandler(this.btnDeleteSound_Click);
             // 
             // dgv_Sound
             // 
@@ -136,6 +138,7 @@
             this.btnSort2.TabIndex = 9;
             this.btnSort2.Text = "Sort";
             this.btnSort2.UseVisualStyleBackColor = true;
+            this.btnSort2.Click += new System.EventHandler(this.btnSort2_Click);
             // 
             // label1
             // 

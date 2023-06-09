@@ -56,13 +56,13 @@ namespace Alarm
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            
+
             string password = GetMD5(txtPw.Text);
             
             // check username + password ->
             // if exist -> role = admin/user -> 
 
-            int kq = BLL_Alarm.Instance.CheckValidate(txtUsername.Text.Trim(), password);
+            int kq = BLL_Alarm.Instance.CheckValidate(txtUsername.Text, password);
             if (kq == 1)
             {
                 try

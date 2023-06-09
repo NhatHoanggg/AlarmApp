@@ -20,6 +20,8 @@ namespace Alarm.GUI
         {
             this.UserName = UserName;
             InitializeComponent();
+            lbClock.Text = DateTime.Now.ToLongTimeString();
+            timer1.Start();
             GUI();
             run();          
         }
@@ -36,7 +38,7 @@ namespace Alarm.GUI
 
                 if (now.Hour.ToString() == arr[0] && now.Minute.ToString() == arr[1] && now.Second.ToString() == arr[2])
                 {
-                    MessageBox.Show(url);
+                    //MessageBox.Show(url);
                     WindowsMediaPlayer player = new WindowsMediaPlayer();
                     player.URL = url;
                     player.controls.play();
@@ -132,6 +134,11 @@ namespace Alarm.GUI
             ReLoadDGV();
             this.OnLoad(e);
             run();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lbClock.Text = DateTime.Now.ToLongTimeString();
         }
     }
 }

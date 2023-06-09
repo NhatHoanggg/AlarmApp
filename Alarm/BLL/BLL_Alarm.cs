@@ -57,6 +57,10 @@ namespace Alarm.BLL
         {
             return DAL_Alarm.Instance.GetAllSound();
         }
+        public dynamic GetSoundTable(string order)
+        {
+            return DAL_Alarm.Instance.GetSoundTable(order);
+        }
         public dynamic GetAllUser(string order)
         {
             return DAL_Alarm.Instance.GetAllUser(order);
@@ -77,6 +81,11 @@ namespace Alarm.BLL
             DAL_Alarm.Instance.AddUser(ac);
         }
 
+        public void DelUser(string Username)
+        {
+            DAL_Alarm.Instance.DelUser(Username);
+        }
+
         public Boolean checkExistSound(string sound)
         {
             return DAL_Alarm.Instance.checkExistSound(sound);
@@ -91,5 +100,11 @@ namespace Alarm.BLL
         {
            DAL_Alarm.Instance.AddSound(sound);
         }
+
+        public void DelSound(string soundname)
+        {
+            DAL_Alarm.Instance.DelSound(soundname);
+        }
+
     }
 }

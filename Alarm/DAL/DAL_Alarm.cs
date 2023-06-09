@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Alarm.DAL
 {
@@ -40,6 +42,18 @@ namespace Alarm.DAL
             return 0;
 
         }
+
+        public void AddUser(Account ac)
+        {
+            Account x = db.Accounts.Find(ac.Username);
+            if (x == null)
+            {
+                db.Accounts.Add(ac);
+                db.SaveChanges();
+            }
+        }
+
+
         public dynamic GetScheduleByUserName(string UserName)
         {
             return (from p in db.Schedules
@@ -54,6 +68,22 @@ namespace Alarm.DAL
                         p.Sound.SoundName
                     }).ToList();
         }
+
+        public dynamic GetScheduleBySoundName(string soundname)
+        {
+            return (from p in db.Schedules
+                    where p.Sound.SoundName == soundname
+                    select new
+                    {
+                        p.Id,
+                        p.Username,
+                        p.NameSchedule,
+                        p.DateStart,
+                        p.TimeStart,
+                        p.Sound.SoundName
+                    }).ToList();
+        }
+
         public Schedule GetScheduleById(int id)
         {
             return db.Schedules.Find(id);
@@ -77,8 +107,37 @@ namespace Alarm.DAL
                     Text = i.SoundName
                 });
             }
+            
             return data;
         }
+
+        public dynamic GetSoundTable(string order)
+        {
+            if (order == "Ascending")
+                return (from p in db.Sounds
+                        orderby p.SoundName ascending
+                        select new
+                        {
+                            p.Id_Sound,
+                            p.SoundName
+                        }).ToList();
+            if (order == "Descending")
+                return (from p in db.Sounds
+                        orderby p.SoundName descending
+                        select new
+                        {
+                            p.Id_Sound,
+                            p.SoundName
+                        }).ToList();
+
+            return (from p in db.Sounds
+                    select new
+                    {
+                        p.Id_Sound,
+                        p.SoundName
+                    }).ToList();
+        }
+
         public dynamic GetAllUser(string order)
         {
             if (order == "Ascending")
@@ -132,15 +191,29 @@ namespace Alarm.DAL
             db.Schedules.Remove(x);
             db.SaveChanges();
         }
-        public void AddUser(Account ac)
+
+        public void DelUser(string Username)
         {
-            Account x = db.Accounts.Find(ac.Username);
-            if (x == null)
+            foreach (var i in GetScheduleByUserName(Username))
             {
-                db.Accounts.Add(ac);
-                db.SaveChanges();
+                DelSchedule(i.Id);
             }
+            Account x = db.Accounts.Find(Username);
+            db.Accounts.Remove(x);
+            db.SaveChanges();
         }
+
+        public void DelSound(string soundname)
+        {
+            foreach (var i in GetScheduleBySoundName(soundname))
+            {
+                DelSchedule(i.Id);
+            }
+            Sound x = db.Sounds.Find(soundname);
+            db.Sounds.Remove(x);
+            db.SaveChanges();
+        }
+      
 
         public Boolean checkExistSound(string sound)
         {
@@ -149,7 +222,6 @@ namespace Alarm.DAL
                 bool exists = db.Sounds.Any(p => p.SoundName == sound );
                 return exists;
             }
-            //return true;
         }
         public Sound GetSoundById(int id)
         {
@@ -164,6 +236,11 @@ namespace Alarm.DAL
                 db.Sounds.Add(sound);
                 db.SaveChanges();
             }
+        }
+
+        public void RemoveSound(int id)
+        {
+
         }
 
     }
