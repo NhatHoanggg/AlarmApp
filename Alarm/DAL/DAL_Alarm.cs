@@ -69,10 +69,10 @@ namespace Alarm.DAL
                     }).ToList();
         }
 
-        public dynamic GetScheduleBySoundName(string soundname)
+        public dynamic GetScheduleBySoundName(int Id_sound)
         {
             return (from p in db.Schedules
-                    where p.Sound.SoundName == soundname
+                    where p.ID_Sound == Id_sound
                     select new
                     {
                         p.Id,
@@ -203,13 +203,13 @@ namespace Alarm.DAL
             db.SaveChanges();
         }
 
-        public void DelSound(string soundname)
+        public void DelSound(int Id_sound)
         {
-            foreach (var i in GetScheduleBySoundName(soundname))
+            foreach (var i in GetScheduleBySoundName(Id_sound))
             {
                 DelSchedule(i.Id);
             }
-            Sound x = db.Sounds.Find(soundname);
+            Sound x = db.Sounds.Find(Id_sound);
             db.Sounds.Remove(x);
             db.SaveChanges();
         }

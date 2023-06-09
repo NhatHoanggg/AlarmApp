@@ -157,7 +157,7 @@ namespace Alarm.GUI
                         {
                             string filePath = Dir + "\\" + i.Cells[1].Value.ToString() + ".mp3";
 
-                            BLL_Alarm.Instance.DelSound(i.Cells[1].Value.ToString());
+                            BLL_Alarm.Instance.DelSound((int)i.Cells[0].Value);
                             ReloadSound();
 
                             if (File.Exists(filePath))
