@@ -101,10 +101,16 @@ namespace Alarm.BLL
            DAL_Alarm.Instance.AddSound(sound);
         }
 
+        public dynamic GetScheduleBySoundName(string soundname)
+        {
+            return DAL_Alarm.Instance.GetScheduleBySoundName(soundname);
+        }
+
         public void DelSound(string soundname)
         {
             DAL_Alarm.Instance.DelSound(soundname);
         }
+
 
     }
 }

@@ -32,6 +32,7 @@ namespace Alarm.GUI
         public void ReloadSound()
         {
             dgv_Sound.DataSource = BLL_Alarm.Instance.GetAllSound();
+            //dgv_Sound.DataSource = BLL_Alarm.Instance.GetScheduleBySoundName("baothuc_1");
         }
 
         private void btnDeleteUser_Click(object sender, EventArgs e)
@@ -128,8 +129,10 @@ namespace Alarm.GUI
                     SoundName = sound
                 };
                 BLL_Alarm.Instance.AddSound(s);
+                //MessageBox.Show(this.ID.ToString() + sound);
                 ReloadSound();
             }
+            ReloadSound();
         }
 
         private void btnDeleteSound_Click(object sender, EventArgs e)
@@ -154,20 +157,25 @@ namespace Alarm.GUI
                         {
                             string filePath = Dir + "\\" + i.Cells[1].Value.ToString() + ".mp3";
 
-                            BLL_Alarm.Instance.DelUser(i.Cells[1].Value.ToString());
-                            //MessageBox.Show(filePath);
+                            BLL_Alarm.Instance.DelSound(i.Cells[1].Value.ToString());
+                            ReloadSound();
+
                             if (File.Exists(filePath))
                             {
-                                File.Delete(filePath); 
-                                MessageBox.Show("Xóa file thành công!");
+                                File.Delete(filePath); // Xóa tệp tin
                             }
                             else
                             {
-                                MessageBox.Show("Không tìm thấy tệp tin!");
+                            //MessageBox.Show("Không tìm thấy tệp tin!");
+                            MessageBox.Show("NOT FOUND!!!", 
+                                "NOT FOUND!!!", 
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
                             }
                         }
                     }
-                    ReLoadUser();
+
+                    ReloadSound();
                     MessageBox.Show("Delete User Success!",
                         "SUCCESS!!!",
                         MessageBoxButtons.OK,
@@ -180,10 +188,15 @@ namespace Alarm.GUI
             if (cbbSortSound.SelectedIndex == 0)
             {
                 dgv_Sound.DataSource = BLL_Alarm.Instance.GetSoundTable("Ascending");
+                dgv_Sound.Columns[0].HeaderText = "Value";
+                dgv_Sound.Columns[1].HeaderText = "SoundName";
+
             }
             else
             {
                 dgv_Sound.DataSource = BLL_Alarm.Instance.GetSoundTable("Descending");
+                dgv_Sound.Columns[0].HeaderText = "Value";
+                dgv_Sound.Columns[1].HeaderText = "SoundName";
             }
 
         }
