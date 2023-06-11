@@ -124,15 +124,21 @@ namespace Alarm.GUI
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            if(dgv1.SelectedRows.Count > 0)
+            if (MessageBox.Show("Do you want to delete these schedules?", 
+                "Confirm", MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                foreach(DataGridViewRow i in dgv1.SelectedRows)
+                if (dgv1.SelectedRows.Count > 0)
                 {
-                    BLL_Alarm.Instance.DelSchedule((int)i.Cells["Id"].Value);
+                    foreach (DataGridViewRow i in dgv1.SelectedRows)
+                    {
+                        BLL_Alarm.Instance.DelSchedule((int)i.Cells["Id"].Value);
+                    }
                 }
+                ReLoadDGV();
+                this.OnLoad(e);
+                run();
             }
-            ReLoadDGV();
-            this.OnLoad(e);
             run();
         }
 

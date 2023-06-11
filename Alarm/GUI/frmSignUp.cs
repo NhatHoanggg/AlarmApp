@@ -79,50 +79,56 @@ namespace Alarm.GUI
             //MessageBox.Show("new: " + " -- " + txtUsername_reg.Text + "//" + txtPw_res.Text);
             BLL_Alarm.Instance.AddUser(s);
             //d();
+            MessageBox.Show("Sign Up Success!");
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
             // check empty infomation
-            if (string.IsNullOrEmpty(txtPw_res.Text) || string.IsNullOrEmpty(txtPw_res.Text) || string.IsNullOrEmpty(txtValidate.Text))
+            if (string.IsNullOrEmpty(txtUsername_reg.Text) || string.IsNullOrEmpty(txtPw_res.Text) || string.IsNullOrEmpty(txtValidate.Text))
             {
                 MessageBox.Show("Please Complete All Information!");
             }
-
-            // check password
-            if (txtPw_res.Text != txtValidate.Text)
+            else
             {
-                MessageBox.Show("Invalid password!");
-                txtPw_res.Text = "";
-                txtValidate.Text = "";
-                txtPw_res.Focus();
-            }
 
-            else {
-                // check exist -> role
-                // kq = 0 -> new user 
-                // kq = 1 -> role: admin
-                // kq = 2 -> role: user
-                int kq = BLL_Alarm.Instance.CheckValidate(txtUsername_reg.Text.Trim(), GetMD5(txtPw_res.Text));
-                
-                // MessageBox.Show(kq.ToString());
-                if (kq!=0)
+                // check password
+                if (txtPw_res.Text != txtValidate.Text)
                 {
-                    MessageBox.Show("User already exists!");
-                    txtUsername_reg.Focus();
-                    txtUsername_reg.Text = "";
+                    MessageBox.Show("Invalid password!");
                     txtPw_res.Text = "";
                     txtValidate.Text = "";
+                    txtPw_res.Focus();
                 }
+
                 else
                 {
-                    addUser();
-                    this.Hide();
-                    frmLogin login = new frmLogin();
-                    login.ShowDialog();
-                    this.Close();
+                    // check exist -> role
+                    // kq = 0 -> new user 
+                    // kq = 1 -> role: admin
+                    // kq = 2 -> role: user
+                    int kq = BLL_Alarm.Instance.CheckValidate(txtUsername_reg.Text.Trim(), GetMD5(txtPw_res.Text));
+
+                    // MessageBox.Show(kq.ToString());
+                    if (kq != 0)
+                    {
+                        MessageBox.Show("User already exists!");
+                        txtUsername_reg.Focus();
+                        txtUsername_reg.Text = "";
+                        txtPw_res.Text = "";
+                        txtValidate.Text = "";
+                    }
+                    else
+                    {
+                        addUser();
+                        this.Hide();
+                        frmLogin login = new frmLogin();
+                        login.ShowDialog();
+                        this.Close();
+                    }
                 }
-            }     
+
+            }
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {

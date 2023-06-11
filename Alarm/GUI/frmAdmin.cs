@@ -132,6 +132,13 @@ namespace Alarm.GUI
                 //MessageBox.Show(this.ID.ToString() + sound);
                 ReloadSound();
             }
+            if (MessageBox.Show("Add Sound Success!",
+                "SUCCESS",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                ReloadSound();
+            }
             ReloadSound();
         }
 

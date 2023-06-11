@@ -61,48 +61,60 @@ namespace Alarm
             
             // check username + password ->
             // if exist -> role = admin/user -> 
+            if (string.IsNullOrEmpty(txtPw.Text) || string.IsNullOrEmpty(txtUsername.Text))
+            {
+                MessageBox.Show("Complete information!" , "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtPw.Text = "";
+                txtUsername.Text = "";
+                txtUsername.Focus();
+            }
 
-            int kq = BLL_Alarm.Instance.CheckValidate(txtUsername.Text, password);
-            if (kq == 1)
-            {
-                try
-                {
-                    using (frmAdmin f = new frmAdmin())
-                    {
-                        MessageBox.Show("SUCCESS!", "SUCCESS!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Hide();
-                        f.ShowDialog();
-                        this.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            else if(kq == 2)
-            {
-                try
-                {
-                    using(frmUser_main f = new frmUser_main(txtUsername.Text))
-                    {
-                        MessageBox.Show("SUCCESS!", "SUCCESS!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Hide();
-                        f.ShowDialog();
-                        this.Dispose();
-                    }
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
             else
             {
-                MessageBox.Show("Account does not exist!","ERROR!!!",MessageBoxButtons.OK,MessageBoxIcon.Stop);
-                txtUsername.Text = "";
-                txtPw.Text = "";
+
+                int kq = BLL_Alarm.Instance.CheckValidate(txtUsername.Text, password);
+                if (kq == 1)
+                {
+                    try
+                    {
+                        using (frmAdmin f = new frmAdmin())
+                        {
+                            MessageBox.Show("SUCCESS!", "SUCCESS!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Hide();
+                            f.ShowDialog();
+                            this.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else if (kq == 2)
+                {
+                    try
+                    {
+                        using (frmUser_main f = new frmUser_main(txtUsername.Text))
+                        {
+                            MessageBox.Show("SUCCESS!", "SUCCESS!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Hide();
+                            f.ShowDialog();
+                            this.Dispose();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Account does not exist!", "ERROR!!!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    txtUsername.Text = "";
+                    txtPw.Text = "";
+                }
             }
+
         }
 
         private void btnSignUp_Click(object sender, EventArgs e)

@@ -28,7 +28,7 @@ namespace Alarm.BLL
 
         }
         // 
-        public int CheckValidate(string UserName, string Password)
+        public int CheckValidate(string UserName, string Password) //1
         {
             return DAL_Alarm.Instance.CheckValidate(UserName, Password);
         }
@@ -37,7 +37,7 @@ namespace Alarm.BLL
             return DAL_Alarm.Instance.GetAccount(UserName);
         }
 
-        public dynamic GetScheduleByUserName(string UserName)
+        public dynamic GetScheduleByUserName(string UserName) //3
         {
             return DAL_Alarm.Instance.GetScheduleByUserName(UserName);
         }
@@ -76,7 +76,7 @@ namespace Alarm.BLL
             DAL_Alarm.Instance.DelSchedule(Id);
         }
 
-        public void AddUser(Account ac)
+        public void AddUser(Account ac) //2
         {
             DAL_Alarm.Instance.AddUser(ac);
         }
